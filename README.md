@@ -1,5 +1,5 @@
 # Co-VeGAN
-This is the official implementation code for **[Co-VeGAN: Complex-Valued Generative Adversarial Network for Compressive Sensing MR Image Reconstruction](https://arxiv.org/abs/2002.10523)** by *[Bhavya Vasudeva]*^, *[Puneesh Deora]*^, *[Saumik Bhattacharya]*, *[Pyari Mohan Pradhan]* (^equal contribution).
+This is the official implementation code for **[Co-VeGAN: Complex-Valued Generative Adversarial Network for Compressive Sensing MR Image Reconstruction](https://arxiv.org/abs/2002.10523)** by *Bhavya Vasudeva*^, *Puneesh Deora*^, *Saumik Bhattacharya*, *Pyari Mohan Pradhan* (^equal contribution).
 
 ## Pre-requisites
 The code was written with Python 3.6.8 with the following dependencies:
