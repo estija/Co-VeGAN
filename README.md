@@ -32,11 +32,11 @@ This code has been tested in Ubuntu 16.04.6 LTS with 4 NVIDIA GeForce GTX 1080 T
 
 #### Testing the pre-trained model:
 1. The pre-trained generator weights are available at: 
-* 30% 1D-G undersampling
-* 30% Radial undersampling
-* 30% Spiral undersampling
-* 20% 1D-G undersampling
-* 10% 1D-G undersampling
+* [30% 1D-G undersampling](https://drive.google.com/open?id=1WQ92TiBHJXplwwVDZ9jpY-lSBtvV9G6d)
+* [30% Radial undersampling](https://drive.google.com/open?id=1u5YC1zJDIk__RDCKrRppHfRXQSiKeupY)
+* [30% Spiral undersampling](https://drive.google.com/open?id=1zAxyxs9bpag4iCV2jk4P71RrhO8ry8BS)
+* [20% 1D-G undersampling](https://drive.google.com/open?id=1wXC322wti8eucKz9J39wZ2nRrjDezb_f)
+* [10% 1D-G undersampling](https://drive.google.com/open?id=1G60xAEr8na4AbPRtcRAtg6J--Re0j8-s)
 
 Download the required weights in the repository folder. They can used to obtain the results as provided in the paper.
 
