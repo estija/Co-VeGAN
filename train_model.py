@@ -19,6 +19,7 @@ from wvt_loss import wt_diff
 from tensorflow.python.ops import array_ops
 
 class sinusoid(Layer):
+    #PC-SoS activation, as mentioned in the paper
     def __init__(self, **kwargs):
         super(sinusoid, self).__init__(**kwargs)
     def build(self, input_shape):
