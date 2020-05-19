@@ -16,17 +16,20 @@ This code has been tested in Ubuntu 16.04.6 LTS with 4 NVIDIA GeForce GTX 1080 T
 
 ## How to Use
 ### Preparing data
+1. Downloading the dataset:
+
 **MICCAI 2013 dataset:** 
-1. The MICCAI 2013 grand challenge dataset can be downloaded from this [webpage](https://my.vanderbilt.edu/masi/workshops/). It is required to fill a google form and register be able to download the data.
-2. Download and save the 'training-training' and 'training-testing' folders, which contain the training and testing data, respectively, into the repository folder.
+* The MICCAI 2013 grand challenge dataset can be downloaded from this [webpage](https://my.vanderbilt.edu/masi/workshops/). It is required to fill a google form and register be able to download the data.
+* Download and save the 'training-training' and 'training-testing' folders, which contain the training and testing data, respectively, into the repository folder.
 
 **MRNet dataset:** 
-1. The MRNet dataset can be downloading from this [webpage](https://stanfordmlgroup.github.io/competitions/mrnet/). It also requires to register by filling the form at the end of the page to be able to download the data.
-2. Download and save the 'train' and 'valid' folders, which contain the training and testing data, respectively, into the repository folder.
-3. Run 'python dataset_load.py' to create the GT dataset. 
-4. Run 'python usamp_data.py' to create the undersampled dataset. 
-5. These files would create the training data using MICCAI 2013 dataset. For MRNet dataset, or for testing data, please read the comments in the files to make the necessary changes.
-6. The 'masks' folder contains the undersampling masks used in this work. The path for the mask can be modified in 'usamp_data.py', as required.
+* The MRNet dataset can be downloading from this [webpage](https://stanfordmlgroup.github.io/competitions/mrnet/). It also requires to register by filling the form at the end of the page to be able to download the data.
+* Download and save the 'train' and 'valid' folders, which contain the training and testing data, respectively, into the repository folder.
+
+2. Run 'python dataset_load.py' to create the GT dataset. 
+3. Run 'python usamp_data.py' to create the undersampled dataset. 
+4. These files would create the training data using MICCAI 2013 dataset. For MRNet dataset, or for testing data, please read the comments in the files to make the necessary changes.
+5. The 'masks' folder contains the undersampling masks used in this work. The path for the mask can be modified in 'usamp_data.py', as required.
 
 ### Training
 1. Move the files in 'complexnn' folder to the repository folder.
