@@ -18,11 +18,11 @@ This code has been tested in Ubuntu 16.04.6 LTS with 4 NVIDIA GeForce GTX 1080 T
 ### Preparing data
 1. Downloading the dataset:
 
- &nbsp; &nbsp; **MICCAI 2013 dataset:** 
+&nbsp; &nbsp; &nbsp; **MICCAI 2013 dataset:** 
 * The MICCAI 2013 grand challenge dataset can be downloaded from this [webpage](https://my.vanderbilt.edu/masi/workshops/). It is required to fill a google form and register be able to download the data.
-* Download and save the 'training-training' and 'training-testing' folders, which contain the training and testing data, respectively, into the repository folder.
+&nbsp;&nbsp;&bull; Download and save the 'training-training' and training-testing' folders, which contain the training and testing data, respectively, into the repository folder.
 
- &nbsp; &nbsp; **MRNet dataset:** 
+&nbsp; &nbsp; **MRNet dataset:** 
 * The MRNet dataset can be downloading from this [webpage](https://stanfordmlgroup.github.io/competitions/mrnet/). It also requires to register by filling the form at the end of the page to be able to download the data.
 * Download and save the 'train' and 'valid' folders, which contain the training and testing data, respectively, into the repository folder.
 
@@ -52,8 +52,14 @@ python test_model.py
 ```
 
 #### Testing the pre-trained model:
-1. The pre-trained generator weights are available at: 
-* [30% 1D-G undersampling](https://drive.google.com/open?id=1WQ92TiBHJXplwwVDZ9jpY-lSBtvV9G6d) &nbsp; * [30% Radial undersampling](https://drive.google.com/open?id=1u5YC1zJDIk__RDCKrRppHfRXQSiKeupY) &nbsp; &nbsp; * [30% Spiral undersampling](https://drive.google.com/open?id=1zAxyxs9bpag4iCV2jk4P71RrhO8ry8BS) &nbsp; &nbsp; * [20% 1D-G undersampling](https://drive.google.com/open?id=1wXC322wti8eucKz9J39wZ2nRrjDezb_f) &nbsp; &nbsp; * [10% 1D-G undersampling](https://drive.google.com/open?id=1G60xAEr8na4AbPRtcRAtg6J--Re0j8-s)
+1. The pre-trained generator weights for various undersampling patterns are available at: 
+<p>
+&bull;&nbsp;&nbsp;<a href="https://drive.google.com/open?id=1WQ92TiBHJXplwwVDZ9jpY-lSBtvV9G6d">30% 1D-G</a>&nbsp;&nbsp;&bull;&nbsp;&nbsp;
+<a href="https://drive.google.com/open?id=1u5YC1zJDIk__RDCKrRppHfRXQSiKeupY">30% Radial</a>&nbsp;&nbsp;&bull;&nbsp;&nbsp;
+<a href="https://drive.google.com/open?id=1zAxyxs9bpag4iCV2jk4P71RrhO8ry8BS">30% Spiral</a>&nbsp;&nbsp;&bull;&nbsp;&nbsp;
+<a href="https://drive.google.com/open?id=1wXC322wti8eucKz9J39wZ2nRrjDezb_f">20% 1D-G</a>&nbsp;&nbsp;&bull;&nbsp;&nbsp;
+<a href="https://drive.google.com/open?id=1G60xAEr8na4AbPRtcRAtg6J--Re0j8-s">10% 1D-G</a>
+</p>
 
 Download the required weights in the repository folder. They can used to obtain the results as provided in the paper.
 2. Run the following command, after changing the names of paths:
