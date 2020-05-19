@@ -20,6 +20,7 @@ This code has been tested in Ubuntu 16.04.6 LTS with 4 NVIDIA GeForce GTX 1080 T
 
 &nbsp; &nbsp; &nbsp; **MICCAI 2013 dataset:** 
 * The MICCAI 2013 grand challenge dataset can be downloaded from this [webpage](https://my.vanderbilt.edu/masi/workshops/). It is required to fill a google form and register be able to download the data.
+
 &nbsp;&nbsp;&bull; Download and save the 'training-training' and training-testing' folders, which contain the training and testing data, respectively, into the repository folder.
 
 &nbsp; &nbsp; **MRNet dataset:** 
@@ -53,8 +54,8 @@ python test_model.py
 
 #### Testing the pre-trained model:
 1. The pre-trained generator weights for various undersampling patterns are available at: 
-<p>
-&bull;&nbsp;&nbsp;<a href="https://drive.google.com/open?id=1WQ92TiBHJXplwwVDZ9jpY-lSBtvV9G6d">30% 1D-G</a>&nbsp;&nbsp;&bull;&nbsp;&nbsp;
+<p align="center">
+<a href="https://drive.google.com/open?id=1WQ92TiBHJXplwwVDZ9jpY-lSBtvV9G6d">30% 1D-G</a>&nbsp;&nbsp;&bull;&nbsp;&nbsp;
 <a href="https://drive.google.com/open?id=1u5YC1zJDIk__RDCKrRppHfRXQSiKeupY">30% Radial</a>&nbsp;&nbsp;&bull;&nbsp;&nbsp;
 <a href="https://drive.google.com/open?id=1zAxyxs9bpag4iCV2jk4P71RrhO8ry8BS">30% Spiral</a>&nbsp;&nbsp;&bull;&nbsp;&nbsp;
 <a href="https://drive.google.com/open?id=1wXC322wti8eucKz9J39wZ2nRrjDezb_f">20% 1D-G</a>&nbsp;&nbsp;&bull;&nbsp;&nbsp;
