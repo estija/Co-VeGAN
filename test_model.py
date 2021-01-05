@@ -6,11 +6,10 @@ from keras.layers import Conv2D, Conv2DTranspose, UpSampling2D, AveragePooling2D
 from keras.layers import Flatten, Add
 from keras.layers import Concatenate, Activation, Layer
 from keras.layers import LeakyReLU, BatchNormalization, Lambda, PReLU, Multiply
-from keras.initializers import RandomUniform
+from keras.initializers import constant, RandomUniform
 import matplotlib.pyplot as plt
 import numpy as np
 from metrics import metrics
-from keras.initializers import constant
 import pickle
 from matplotlib import patches
 from mpl_toolkits.axes_grid1.inset_locator import zoomed_inset_axes
@@ -22,8 +21,8 @@ from utils import GetReal, GetImag, GetAbs
 from keras import backend as K
 from tensorflow.python.ops import array_ops
 
-data_path='/home/puneesh/diencephalon/testing_100.pickle'
-usam_path='/home/puneesh/diencephalon/testing_100_usamp5.pickle'
+data_path='/home/Co-VeGAN/testing_gt.pickle'
+usam_path='/home/Co-VeGAN/testing_usamp_1dg_a5.pickle'
 
 df=open(data_path,'rb')
 uf=open(usam_path,'rb')
@@ -41,13 +40,12 @@ accel = 5
 usp_img = usp_data.imag 
 usp_real = usp_data.real 
 
-# to standardize the testing data, use statistics from the training data.
-
-#max_val=1.4005044013171297 #for 30
-max_val = 1.4297224443392373 #for 20
-#max_val = 1.4196847643977173 #for radial 30
-#max_val = 359.39426680605976  #for spiral 30
-#max_val = 360.25993392112275 #for 10
+#to standardize the testing data, use values from the training data
+#max_val=1.4005044013171297 #for a3
+max_val = 1.4297224443392373 #for a5
+#max_val = 360.25993392112275 #for a10
+#max_val = 1.4196847643977173 #for a3 radial
+#max_val = 359.39426680605976  #for a3 spiral
 
 usp_real = usp_real/max_val
 usp_img = usp_img/max_val
@@ -57,6 +55,7 @@ data_gen = np.concatenate((usp_real, usp_img), axis =-1)
 class sinusoid(Layer):
     def __init__(self, **kwargs):
         super(sinusoid, self).__init__(**kwargs)
+        
     def build(self, input_shape):
         self.s1 = self.add_weight(name='s1',shape=[1, 1, int(input_shape[3]/2)],initializer = RandomUniform(minval=-0.25, maxval=0.25),trainable=True)
         self.w1 = self.add_weight(name='w1',shape=[1, 1, int(input_shape[3]/2)],initializer = RandomUniform(minval=-0.05, maxval=0.05),trainable=True)
@@ -87,7 +86,8 @@ class sinusoid(Layer):
         self.phi = tf.keras.backend.repeat_elements(self.phi, rep=input_shape[1], axis=0)
         self.phi = tf.keras.backend.repeat_elements(self.phi, rep=input_shape[2], axis=1)
 
-        super(sinusoid, self).build(input_shape)  # Be sure to call this somewhere!
+        super(sinusoid, self).build(input_shape)
+        
     def call(self, x):
         real_act = GetReal()(x)
         imag_act = GetImag()(x)
@@ -103,7 +103,6 @@ class sinusoid(Layer):
         phase_new = tf.sin(phase+self.phi)
         phase_new = Lambda(lambda x:x)(phase_new)
         imag_act = Multiply()([mag, phase_new])
-
         imag_act = K.concatenate([real_act, imag_act], axis=-1)
         return imag_act
 
@@ -113,8 +112,6 @@ def resden(x,fil,gr,beta,gamma_init,trainable):
     x1=ComplexBatchNormalization()(x1)
     x1=sinusoid()(x1)
     
-    
-
     x1=Concatenate(axis=-1)([GetReal()(x),GetReal()(x1),GetImag()(x),GetImag()(x1)])
     
     x2=ComplexConv2D(filters=gr,kernel_size=3,strides=1,padding='same', use_bias = True, kernel_initializer='complex', init_criterion='he', bias_initializer = 'zeros')(x1)
@@ -248,20 +245,19 @@ def generator(inp_shape, trainable = True): #training will at least have to be g
    lay_256up = ComplexBatchNormalization()(lay_256up)
    lay_256up = sinusoid()(lay_256up) #256x256
    
-
    out1 =  ComplexConv2D(1, (1,1), strides = (1,1), activation = 'tanh', padding = 'same', use_bias = True, kernel_initializer = 'complex', init_criterion='he', bias_initializer = 'zeros')(lay_256up)
    out1=Lambda(lambda x:(x+1)/2)(out1)
    out1=GetAbs()(out1)
    out=Lambda(lambda x:np.sqrt(2)*x-1)(out1)
 
    model = Model(inputs = inp_real_imag, outputs = out)
-   model.summary()
+   #model.summary()
    return model
 
 
-#to infer after a run. 
 gen4 = generator(inp_shape = inp_shape, trainable = False)
 
+#to infer after a run
 f = open('/home/Co-VeGAN/covegan_a5_metrics.txt', 'x')
 f = open('/home/Co-VeGAN/covegan_a5_metrics.txt', 'a')
 
@@ -275,11 +271,12 @@ for i in range(120):
    print(psnr, ssim)
 
 
-#to infer a single model.
+#to infer a single model
 '''
-gen16 = generator(inp_shape = inp_shape, trainable = False)
-gen16.load_weights('/home/puneesh/egan/cs-mri/covegan_tipsos_phi_res_a5/covegan_tipsos_phi_a5_new_r1_0026.h5')
-psnr, ssim = metrics(data, out16[:,:,:,0])
+i=30
+filename = '/home/Co-VeGAN/covegan_a5_gen_%04d.h5' % (i+1)   
+gen4.load_weights(filename)
+out4 = gen4.predict(data_gen)
+psnr, ssim = metrics(data, out4[:,:,:,0],2.0)
 print(psnr,ssim)
-print(t2-t1)
 '''
