@@ -18,6 +18,7 @@ import os
 from wvt_loss import wt_diff
 from tensorflow.python.ops import array_ops
 
+
 class sinusoid(Layer):
     #PC-SoS activation, as mentioned in the paper
     def __init__(self, **kwargs):
@@ -283,14 +284,13 @@ def generator(inp_shape, trainable = True):
    lay_256up = ComplexBatchNormalization()(lay_256up)
    lay_256up = sinusoid()(lay_256up) #256x256
    
-
    out1 =  ComplexConv2D(1, (1,1), strides = (1,1), activation = 'tanh', padding = 'same', use_bias = True, kernel_initializer = 'complex', init_criterion='he', bias_initializer = 'zeros')(lay_256up)
    out1=Lambda(lambda x:(x+1)/2)(out1)
    out1=GetAbs()(out1)
    out=Lambda(lambda x:np.sqrt(2)*x-1)(out1)
    
    model = Model(inputs = inp_real_imag, outputs = out)
-   model.summary()
+   #model.summary()
    return model
 
 
@@ -305,7 +305,6 @@ def define_gan_model(gen_model, dis_model, inp_shape):
     out_g2 = out_g
     model = Model(inputs = inp, outputs = [out_dis, out_g, out_g1, out_g2])
 
-    model.summary()
     return model
 
 
@@ -379,6 +378,7 @@ def train(g_par, d_par, gan_model, dataset_real, u_sampled_data,  n_epochs, n_ba
 
     f.close()    
 
+
 #hyperparameters 
 n_epochs =120
 n_batch = 16
@@ -441,7 +441,7 @@ r_min = np.min(u_sampled_data_real)
 i_min = np.min(u_sampled_data_imag)
 
 max_val = np.max([np.abs(r_max), np.abs(i_max), np.abs(r_min), np.abs(i_min)])
-print(max_val)
+#print(max_val)
 
 u_sampled_data_real = u_sampled_data_real/max_val
 u_sampled_data_imag = u_sampled_data_imag/max_val
