@@ -4,6 +4,12 @@ import matplotlib.pyplot as plt
 import numpy as np
 import cmath
 
+dataset='miccai' #dataset to be used: miccai or mrnet or fastmri
+mode='train' #train or test
+save_path='/home/Co-VeGAN/'
+mask_path='/home/Co-VeGAN/masks/mask_1dg_a5.pickle' #path for the required mask
+train_path='/home/Co-VeGAN/training_gt_aug.pickle'
+test_path='/home/Co-VeGAN/testing_gt.pickle'
 
 def usam_data(data_tensor, mask, dataset):
     data =[] 
@@ -41,48 +47,44 @@ def usam_data_noise(data_tensor, mask, noise_ratio, dataset):
     data = np.asarray(data)
     return data 
 
-dataset='miccai' #dataset to be used: miccai or mrnet or fastmri
-save_path='/home/Co-VeGAN/'
-mask_path='/home/Co-VeGAN/masks/mask_1dg_a5.pickle' #path for the required mask
+
 maf=open(mask_path,'rb')
 mask=pickle.load(maf)
 
-
-#creating undersampled training data
-train_path='/home/Co-VeGAN/training_gt_aug.pickle'
-trf=open(train_path,'rb')
-train_data=pickle.load(trf)
-
-if dataset=='miccai':
-  train_data_new = usam_data(train_data[0:13461,:,:], mask, dataset)                  #no noise
-  train_data_new2 = usam_data_noise(train_data[13461:13956,:,:], mask, 0.1, dataset)  #10% noise-overlapping
-  train_data_new3 = usam_data_noise(train_data[13956:14451,:,:], mask, 0.2, dataset)  #20% noise-overlapping
-  train_data_new4 = usam_data_noise(train_data[14451:17619,:,:,], mask, 0.1, dataset) #10% noise-nonoverlapping
-  train_data_new5 = usam_data_noise(train_data[17619:20787,:,:], mask, 0.2, dataset)  #20% noise-nonoverlapping
-else:
-  train_data_new = usam_data(train_data[0:8100,:,:], mask, dataset)                  #no noise
-  train_data_new2 = usam_data_noise(train_data[8100:8400,:,:], mask, 0.1, dataset)  #10% noise-overlapping
-  train_data_new3 = usam_data_noise(train_data[8400:8700,:,:], mask, 0.2, dataset)  #20% noise-overlapping
-  train_data_new4 = usam_data_noise(train_data[8700:10600,:,:,], mask, 0.1, dataset) #10% noise-nonoverlapping
-  train_data_new5 = usam_data_noise(train_data[10600:12500,:,:], mask, 0.2, dataset)  #20% noise-nonoverlapping
-
-stack1 = np.vstack((train_data_new,train_data_new2))
-stack2 = np.vstack((train_data_new3, train_data_new4))
-stack3 = np.vstack((stack2, train_data_new5))
-fstack = np.vstack((stack1, stack3))
-
-with open(os.path.join(save_path,'training_usamp_1dg_a5_aug.pickle'),'wb') as f:
+if mode=='train':
+  #creating undersampled training data
+  trf=open(train_path,'rb')
+  train_data=pickle.load(trf)
+  
+  if dataset=='miccai':
+    train_data_new = usam_data(train_data[0:13461,:,:], mask, dataset)                  #no noise
+    train_data_new2 = usam_data_noise(train_data[13461:13956,:,:], mask, 0.1, dataset)  #10% noise-overlapping
+    train_data_new3 = usam_data_noise(train_data[13956:14451,:,:], mask, 0.2, dataset)  #20% noise-overlapping
+    train_data_new4 = usam_data_noise(train_data[14451:17619,:,:,], mask, 0.1, dataset) #10% noise-nonoverlapping
+    train_data_new5 = usam_data_noise(train_data[17619:20787,:,:], mask, 0.2, dataset)  #20% noise-nonoverlapping
+  else:
+    train_data_new = usam_data(train_data[0:8100,:,:], mask, dataset)                  #no noise
+    train_data_new2 = usam_data_noise(train_data[8100:8400,:,:], mask, 0.1, dataset)  #10% noise-overlapping
+    train_data_new3 = usam_data_noise(train_data[8400:8700,:,:], mask, 0.2, dataset)  #20% noise-overlapping
+    train_data_new4 = usam_data_noise(train_data[8700:10600,:,:,], mask, 0.1, dataset) #10% noise-nonoverlapping
+    train_data_new5 = usam_data_noise(train_data[10600:12500,:,:], mask, 0.2, dataset)  #20% noise-nonoverlapping
+  
+  stack1 = np.vstack((train_data_new,train_data_new2))
+  stack2 = np.vstack((train_data_new3, train_data_new4))
+  stack3 = np.vstack((stack2, train_data_new5))
+  fstack = np.vstack((stack1, stack3))
+  
+  with open(os.path.join(save_path,'training_usamp_1dg_a5_aug.pickle'),'wb') as f:
     pickle.dump(fstack,f,protocol=4)
-
-'''
-#creating undersampled testing data
-test_path='/home/Co-VeGAN/testing_gt.pickle'
-tef=open(test_path,'rb')
-test_data=pickle.load(tef)
-
-test_data_new = usam_data(test_data,mask,dataset) #for noise-free imgs
-#test_data_new=usam_data_noise(test_data,mask,0.1,dataset) #for imgs with 10% noise
-#test_data_new=usam_data_noise(test_data,mask,0.2,dataset) #for imgs with 20% noise
-with open(os.path.join(save_path,'testing_usamp_1dg_a5.pickle'),'wb') as f:
+    
+else:
+  #creating undersampled testing data
+  tef=open(test_path,'rb')
+  test_data=pickle.load(tef)
+  
+  test_data_new = usam_data(test_data,mask,dataset) #for noise-free imgs
+  #test_data_new=usam_data_noise(test_data,mask,0.1,dataset) #for imgs with 10% noise
+  #test_data_new=usam_data_noise(test_data,mask,0.2,dataset) #for imgs with 20% noise
+  
+  with open(os.path.join(save_path,'testing_usamp_1dg_a5.pickle'),'wb') as f:
     pickle.dump(test_data_new,f,protocol=4)
-'''
