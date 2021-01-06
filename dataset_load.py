@@ -6,6 +6,7 @@ import h5py
 import pickle
 
 dataset='miccai' #dataset to be used: miccai or mrnet or fastmri
+mode='train' #train or test
 save_path='/home/Co-VeGAN/'
 
 def load_a(path, num):
@@ -107,36 +108,31 @@ def train_data_aug(train_gt,dataset):
     return gt_new
 
 
-#for training data
+if mode=='train':
+  if dataset=='miccai':
+    train_path='/home/Co-VeGAN/training-training/warped-images'
+    train_gt=load_a(train_path, 1090)
+  elif dataset=='mrnet':
+    train_path='/home/Co-VeGAN/train/coronal'
+    train_gt=load_b(train_path)
+  elif dataset=='fastmri':
+    train_path='/home/Co-VeGAN/singlecoil_train'
+    train_gt=load_c(train_path, 450, 'train')
 
-if dataset=='miccai':
-  train_path='/home/Co-VeGAN/training-training/warped-images'
-  train_gt=load_a(train_path,1090)
-elif dataset=='mrnet':
-  train_path='/home/Co-VeGAN/train/coronal'
-  train_gt=load_b(train_path)
-elif dataset=='fastmri':
-  train_path='/home/Co-VeGAN/singlecoil_train'
-  train_gt=load_c(train_path,450,'train')
+  train_gt_aug=train_data_aug(train_gt,dataset) #created gt for augmented data
 
-train_gt_aug=train_data_aug(train_gt,dataset) #created gt for augmented data
-
-with open(os.path.join(save_path,'training_gt_aug.pickle'),'wb') as f:
+  with open(os.path.join(save_path,'training_gt_aug.pickle'),'wb') as f:
         pickle.dump(train_gt_aug,f,protocol=4)
+else:
+  if dataset=='miccai':
+    test_path='/home/Co-VeGAN/training-testing/warped-images'
+    test_data=load_a(test_path, 390)
+  elif dataset=='mrnet':
+    test_path='/home/Co-VeGAN/valid/coronal'
+    test_data=load_b(test_path)
+  elif dataset=='fastmri':
+    test_path='/home/Co-VeGAN/singlecoil_train'
+    test_data=load_c(test_path, 100, 'test')
 
-'''
-#for testing data
-
-if dataset=='miccai':
-  test_path='/home/Co-VeGAN/training-testing/warped-images'
-  test_data=load_a(test_path, 390)
-elif dataset=='mrnet':
-  test_path='/home/Co-VeGAN/valid/coronal'
-  test_data=load_b(test_path)
-elif dataset=='fastmri':
-  test_path='/home/Co-VeGAN/singlecoil_train'
-  test_data=load_c(test_path, 100, 'test')
-
-with open(os.path.join(save_path,'testing_gt.pickle'),'wb') as f:
+  with open(os.path.join(save_path,'testing_gt.pickle'),'wb') as f:
        pickle.dump(test_data,f,protocol=4)
-'''
