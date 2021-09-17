@@ -150,6 +150,7 @@ def resresden(x,fil,gr,betad,betar,gamma_init,trainable):
 def generator(inp_shape, trainable = True): #training will at least have to be given - required for inference mode.
    gamma_init = tf.random_normal_initializer(1., 0.02)
 
+   fd=32
    gr=8
    nb=4
    betad=0.2
