@@ -102,12 +102,13 @@ python test_model_complex.py
 ## Citation
 If you find our research useful, please cite our work.
 ```
-@article{vasudeva2020covegan,
-    title={Co-VeGAN: Complex-Valued Generative Adversarial Network for Compressive Sensing MR Image Reconstruction},
-    author={B. Vasudeva and P. Deora and S. Bhattacharya and P. M. Pradhan},
-    journal={ArXiv},
-    year={2020},
-    volume={abs/2002.10523}
+@InProceedings{Vasudeva_2022_WACV,
+    author    = {Vasudeva, Bhavya and Deora, Puneesh and Bhattacharya, Saumik and Pradhan, Pyari Mohan},
+    title     = {Compressed Sensing MRI Reconstruction With Co-VeGAN: Complex-Valued Generative Adversarial Network},
+    booktitle = {Proceedings of the IEEE/CVF Winter Conference on Applications of Computer Vision (WACV)},
+    month     = {January},
+    year      = {2022},
+    pages     = {672-681}
 }
 ```
 
